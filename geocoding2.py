@@ -36,6 +36,7 @@ class Miasto(object):
 		lat = str(self.coords()[0])
 		return lat
 
+    #Defining longitude
     def longitude(self):
 		lon = str(self.coords()[1])
 		return lon
