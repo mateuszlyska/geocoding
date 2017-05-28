@@ -9,7 +9,7 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 
-import urllib2, json, arcpy
+import urllib2, json
 
 class Miasto(object):
     def __init__(self, name):
