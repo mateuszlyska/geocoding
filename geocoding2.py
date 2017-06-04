@@ -46,12 +46,12 @@ def user_input():
 
 	if "," in user_input:
 		cities = user_input.split(",")
-		for city in cities:
-			city = city.strip()
-			coord = Miasto(city)
-			lat = coord.latitude()
-			lon = coord.longitude()
-			print city + ": " + lat + ", " + lon
+        for city in cities:
+            city = city.strip()
+            coord = Miasto(city)
+            lat = coord.latitude()
+            lon = coord.longitude()
+            print city + ": " + lat + ", " + lon
 
 	#Maybe without if
 	else:
