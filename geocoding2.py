@@ -10,6 +10,8 @@
 #-------------------------------------------------------------------------------
 
 import urllib2, json
+import Tkinter as tk
+import tkMessageBox
 
 class Miasto(object):
     def __init__(self, name):
@@ -41,36 +43,61 @@ class Miasto(object):
 		lon = str(self.coords()[1])
 		return lon
 
-def user_input():
-	user_input = raw_input("What city do you have on mind?")
 
-	if "," in user_input:
-		cities = user_input.split(",")
-        for city in cities:
-            city = city.strip()
-            coord = Miasto(city)
-            lat = coord.latitude()
-            lon = coord.longitude()
-            print city + ": " + lat + ", " + lon
+class GeocodingWindow:
 
-	#Maybe without if
-	else:
-		coord = Miasto(user_input)
-		lat = coord.latitude()
-		lon = coord.longitude()
-		print user_input + ": " + lat + ", " + lon
+    def __init__(self, master):
+        frame = tk.Frame(master)
+        frame.pack()
+
+        self.cityLabel = tk.Label(frame, text = "Cities:", bg = "white", fg = "green")
+        self.cityLabel.grid(row=0, sticky=tk.E)
+
+       	self.cityEntry = tk.Entry(frame)
+        self.cityEntry.grid(row=0, column=1)
+
+        self.butStart = tk.Button(frame, text = "Find coordinates", fg = "red", command = self.messageCoord)
+        self.butStart.grid(columnspan=2)
+
+    def enterText(self):
+		self.entTxt = str(self.cityEntry.get())
+		return self.entTxt
+
+    def user_input(self):
+		user_input = self.enterText()
+
+		if "," in user_input:
+			cities = user_input.split(",")
+			for city in cities:
+				city = city.strip()
+				coord = Miasto(city)
+				lat = coord.latitude()
+				lon = coord.longitude()
+				return city + ": " + lat + ", " + lon
+
+		#Maybe without if
+		else:
+			coord = Miasto(user_input)
+			lat = coord.latitude()
+			lon = coord.longitude()
+			return user_input + ": " + lat + ", " + lon
+
+
+    def messageCoord(self):
+        x = self.user_input()
+        tkMessageBox.showinfo("Coordinates", x)
 
 
 def main():
-    try:
-		user_input()
-    except IndexError:
+	try:
+		root = tk.Tk()
+		window = GeocodingWindow(root)
+		root.mainloop()
+	except IndexError:
 		print "There was an error"
-    except urllib2.HTTPError:
+	except urllib2.HTTPError:
 		print "There was a problem with connection. Please try again."
-    finally:
-		raw_input("Goodbye")
 
 
 if __name__ == "__main__":
-    main()
+	main()
