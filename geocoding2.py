@@ -9,7 +9,7 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 
-import urllib2, json
+import urllib2, json, arcpy
 import Tkinter as tk
 import tkMessageBox
 
@@ -88,6 +88,15 @@ class GeocodingWindow:
         tkMessageBox.showinfo("Coordinates", x)
 
 
+def createPoints(city):
+	x = city.latitude()
+	y = city.longitude()
+	point = x, y
+	
+	location = arcpy.Point(point)
+	return location
+
+		
 def main():
 	try:
 		root = tk.Tk()
